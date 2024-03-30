@@ -15,6 +15,10 @@ node {
 		sh 'mvn package' 
 	}
 
+	stage("mvn test the projects"){
+		sh 'mvn install' 
+	}
+
 	stage("test the projects"){
 		junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
 	}
