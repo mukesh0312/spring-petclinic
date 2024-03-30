@@ -1,9 +1,25 @@
 node {
-    stage ('source cod') {
-        git branch: 'main', url: 'https://github.com/mukesh0312/spring-petclinic.git'
-    }
-    
-    stage ('build the code') {
-        sh 'mvn compile'
-    }
+	stage("clone the projects"){
+		git branch: 'main', url: 'https://github.com/mukesh0312/spring-petclinic.git'
+	}
+
+	stage("mvn clean the projects"){
+		sh 'mvn clean'
+	}
+
+	stage("mvn test the projects"){
+		sh 'mvn test'
+	}
+
+	stage("mvn test the projects"){
+		sh 'mvn package' 
+	}
+
+	stage("test the projects"){
+		junit stdioRetention: '', testResults: '**/surefire-reports/*.xml'
+	}
+
+        stage("archive the artifactes"){
+        	archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
+	}
 }
